@@ -1,3 +1,3 @@
 package com.ligon.deeznuts.exceptions
 
-class ConflictException : Exception()
+class ConflictException(message: String? = null) : Exception(message)

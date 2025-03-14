@@ -17,7 +17,7 @@ class AuthService(
     suspend fun signUp(req: SignUpRequest): AuthResponse {
         val exists = userRepository.existsByUsernameOrEmail(req.username, req.email)
         if (exists)
-            throw ConflictException()
+            throw ConflictException("User already exists")
 
         val hash = BCrypt.hashpw(req.password, BCrypt.gensalt())
 
@@ -35,7 +35,7 @@ class AuthService(
     suspend fun signIn(req: SignInRequest): AuthResponse {
         val user = userRepository.findByUsernameOrEmail(req.usernameOrEmail) ?: throw NotFoundException()
         if (!BCrypt.checkpw(req.password, user.password))
-            throw UnauthorizedException()
+            throw UnauthorizedException("Login failed")
 
         return AuthResponse(jwtService.generateToken(user.id))
     }

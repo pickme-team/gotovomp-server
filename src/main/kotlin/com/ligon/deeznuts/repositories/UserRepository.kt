@@ -7,8 +7,8 @@ import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.jetbrains.exposed.sql.transactions.transaction
 
-class UserRepository(database: Database) {
-    object Users : Table() {
+class UserRepository {
+    private object Users : Table() {
         val id = integer("id").autoIncrement()
         val username = text("username").uniqueIndex()
         val email = text("email").uniqueIndex()
@@ -18,13 +18,13 @@ class UserRepository(database: Database) {
     }
 
     init {
-        transaction(database) {
+        transaction {
             SchemaUtils.create(Users)
         }
     }
 
     suspend fun existsByUsernameOrEmail(username: String, email: String): Boolean = dbQuery {
-        !Users.selectAll().where { (Users.username eq username) or (Users.email eq email) }.empty()
+        Users.selectAll().where { (Users.username eq username) or (Users.email eq email) }.any()
     }
 
     suspend fun create(user: User): User = dbQuery {

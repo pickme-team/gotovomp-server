@@ -1,3 +1,3 @@
 package com.ligon.deeznuts.exceptions
 
-class UnauthorizedException : Exception()
+class UnauthorizedException(message: String? = null) : Exception(message)

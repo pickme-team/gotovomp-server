@@ -8,13 +8,15 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.koin.ktor.ext.inject
 
-fun Application.userModule() = routing {
+fun Application.userModule() {
     val userService by inject<UserService>()
 
-    route("/user") {
-        authenticate {
-            get("/me") {
-                call.respond(userService.findById(call.userId()))
+    routing {
+        route("/user") {
+            authenticate {
+                get("/me") {
+                    call.respond(userService.findById(call.userId()))
+                }
             }
         }
     }

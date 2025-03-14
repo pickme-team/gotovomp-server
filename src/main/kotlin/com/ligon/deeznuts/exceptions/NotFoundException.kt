@@ -1,3 +1,3 @@
 package com.ligon.deeznuts.exceptions
 
-class NotFoundException : Exception()
+class NotFoundException(message: String? = null) : Exception(message)
