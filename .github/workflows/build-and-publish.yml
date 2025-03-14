@@ -30,6 +30,8 @@ jobs:
           GITHUB_USERNAME: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # GitHub automatically provides this token
         run: |
+          echo "Token"
+          echo $GITHUB_TOKEN
           ./gradlew jib \
             -Djib.to.image=$IMAGE_NAME:$IMAGE_TAG \
             -Djib.to.auth.username=$GITHUB_USERNAME \
