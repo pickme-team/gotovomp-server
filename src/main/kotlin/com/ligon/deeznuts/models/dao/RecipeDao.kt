@@ -1,6 +1,7 @@
 package com.ligon.deeznuts.models.dao
 
 import com.ligon.deeznuts.models.Recipe
+import com.ligon.deeznuts.tables.RecipeIngredients
 import com.ligon.deeznuts.tables.Recipes
 import com.ligon.deeznuts.tables.Tags
 import org.jetbrains.exposed.dao.LongEntity
@@ -13,7 +14,9 @@ class RecipeDao(id: EntityID<Long>) : LongEntity(id) {
     var name by Recipes.name
     var author by UserDao referencedOn Recipes.author
     var text by Recipes.text
+
     val tags by TagDao referrersOn Tags.recipe
+    val recipeIngredients by RecipeIngredientDto referrersOn RecipeIngredients.recipe
 
     fun toRecipe() = Recipe(
         id = id.value,

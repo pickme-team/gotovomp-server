@@ -1,8 +1,6 @@
 package com.ligon.deeznuts
 
-import com.ligon.deeznuts.tables.Recipes
-import com.ligon.deeznuts.tables.Tags
-import com.ligon.deeznuts.tables.Users
+import com.ligon.deeznuts.tables.*
 import io.ktor.server.application.*
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
@@ -16,6 +14,6 @@ fun Application.configureDatabase() {
     )
 
     transaction {
-        SchemaUtils.create(Recipes, Tags, Users)
+        SchemaUtils.create(Recipes, Tags, Users, Ingredients, RecipeIngredients)
     }
 }
