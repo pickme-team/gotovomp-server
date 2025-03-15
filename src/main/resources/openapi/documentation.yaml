@@ -3,8 +3,6 @@ info:
   title: "gotovomp_server API"
   description: "gotovomp_server API"
   version: "1.0.0"
-servers:
-- url: "https://gotovomp_server"
 paths:
   /auth/signIn:
     post:
@@ -50,19 +48,6 @@ paths:
             '*/*':
               schema:
                 type: "string"
-  /:
-    get:
-      description: ""
-      responses:
-        "200":
-          description: "OK"
-          content:
-            text/plain:
-              schema:
-                type: "string"
-              examples:
-                Example#1:
-                  value: "Hello World!"
   /ping:
     get:
       description: ""
@@ -101,46 +86,54 @@ components:
     SignInRequest:
       type: "object"
       properties:
-        usernameOrEmail:
+        usernameOrPhoneNumber:
           type: "string"
         password:
           type: "string"
       required:
-      - "usernameOrEmail"
-      - "password"
+        - "usernameOrPhoneNumber"
+        - "password"
     AuthResponse:
       type: "object"
       properties:
         token:
           type: "string"
       required:
-      - "token"
+        - "token"
     SignUpRequest:
       type: "object"
       properties:
         username:
           type: "string"
-        email:
+        firstName:
+          type: "string"
+        lastName:
+          type: "string"
+        phoneNumber:
           type: "string"
         password:
           type: "string"
       required:
-      - "username"
-      - "email"
-      - "password"
+        - "username"
+        - "phoneNumber"
+        - "password"
     User:
       type: "object"
       properties:
         id:
           type: "integer"
-          format: "int32"
+          format: "int64"
         username:
           type: "string"
-        email:
+        firstName:
+          type: "string"
+        lastName:
+          type: "string"
+        phoneNumber:
           type: "string"
         password:
           type: "string"
       required:
-      - "username"
-      - "email"
-      - "password"
+        - "username"
+        - "phoneNumber"
+        - "password"

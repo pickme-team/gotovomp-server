@@ -7,7 +7,12 @@ import io.ktor.server.plugins.requestvalidation.*
 fun Application.configureValidation() {
     install(RequestValidation) {
         validate<Validatable> {
-            it.validate()
+            val reasons = it.validate().toList()
+            
+            if (reasons.any())
+                ValidationResult.Invalid(reasons)
+            else
+                ValidationResult.Valid
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.ligon.deeznuts
 
+import com.ligon.deeznuts.repositories.RecipeRepository
 import com.ligon.deeznuts.repositories.UserRepository
 import com.ligon.deeznuts.services.AuthService
 import com.ligon.deeznuts.services.JWTService
@@ -14,6 +15,7 @@ fun Application.configureDI() {
     val appModule = module {
         single { environment }
 
+        singleOf(::RecipeRepository)
         singleOf(::UserRepository)
 
         singleOf(::JWTService)

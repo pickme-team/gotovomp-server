@@ -15,7 +15,7 @@ class AuthService(
     private val jwtService: JWTService
 ) {
     suspend fun signUp(req: SignUpRequest): AuthResponse {
-        val exists = userRepository.existsByUsernameOrEmail(req.username, req.email)
+        val exists = userRepository.existsByUsernameOrPhoneNumber(req.username, req.phoneNumber)
         if (exists)
             throw ConflictException("User already exists")
 
@@ -24,8 +24,10 @@ class AuthService(
         val user = userRepository.create(
             User(
                 username = req.username,
-                email = req.email,
-                password = hash
+                password = hash,
+                firstName = req.firstName,
+                lastName = req.lastName,
+                phoneNumber = req.phoneNumber
             )
         )
 
@@ -33,7 +35,7 @@ class AuthService(
     }
 
     suspend fun signIn(req: SignInRequest): AuthResponse {
-        val user = userRepository.findByUsernameOrEmail(req.usernameOrEmail) ?: throw NotFoundException()
+        val user = userRepository.findByUsernameOrPhoneNumber(req.usernameOrPhoneNumber) ?: throw NotFoundException()
         if (!BCrypt.checkpw(req.password, user.password))
             throw UnauthorizedException("Login failed")
 

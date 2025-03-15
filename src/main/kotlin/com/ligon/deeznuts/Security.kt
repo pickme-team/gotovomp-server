@@ -16,4 +16,4 @@ fun Application.configureSecurity() {
 }
 
 fun RoutingCall.userId() =
-    principal<JWTPrincipal>()?.subject?.toInt() ?: throw Exception("userId called on an invalid or missing token")
+    principal<JWTPrincipal>()?.subject?.toLong() ?: throw Exception("userId called on an invalid or missing token")

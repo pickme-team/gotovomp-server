@@ -13,7 +13,7 @@ class JWTService(environment: ApplicationEnvironment) {
     private val jwtDomain = environment.config.property("jwt.domain").getString()
     private val jwtSecret = environment.config.property("jwt.secret").getString()
 
-    fun generateToken(id: Int): String =
+    fun generateToken(id: Long): String =
         JWT.create()
             .withAudience(jwtAudience)
             .withIssuer(jwtDomain)
